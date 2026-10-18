@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="uk" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>whyuxavier — Портфоліо проєктів</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                        },
+                        dark: {
+                            bg: '#0a0a0a',
+                            card: '#121212',
+                            border: '#262626',
+                            text: '#e5e5e5',
+                            muted: '#a3a3a3'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+        }
+
+        /* Glassmorphism effects */
+        .glass-header {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .glass-card {
+            background: #121212;
+            border: 1px solid #262626;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: #525252;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Modal backdrop transition */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #404040;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-neutral-800 selection:text-white">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 glass-header border-b border-neutral-800/80 transition-colors">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logo / Title -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 rounded-lg bg-neutral-800 border border-neutral-700 flex items-center justify-center text-white font-bold text-sm group-hover:border-neutral-500 transition-colors">
+                    W
+                </div>
+                <span class="font-semibold tracking-tight text-neutral-100 text-lg">
+                    whyuxavier <span class="text-neutral-500 font-normal text-sm ml-1">/ portfolio</span>
+                </span>
+            </a>
+
+            <!-- Info Button [i] & GitHub -->
+            <div class="flex items-center gap-3">
+                <a href="https://github.com/whyuxavier" target="_blank" rel="noopener noreferrer" 
+                   class="hidden sm:flex items-center gap-2 text-xs font-medium text-neutral-400 hover:text-white px-3 py-1.5 rounded-lg border border-neutral-800 hover:border-neutral-700 transition-all bg-neutral-900/50">
+                    <i class="fa-brands fa-github text-sm"></i>
+                    <span>GitHub</span>
+                </a>
+
+                <button id="infoBtn" aria-label="Інформація про автора"
+                        class="w-9 h-9 rounded-lg bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700 flex items-center justify-center text-neutral-300 hover:text-white transition-all font-serif italic text-base font-bold shadow-sm">
+                    i
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
+        
+        <!-- Hero Section -->
+        <div class="mb-12">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs text-neutral-400 mb-4">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Веб-розробка & Навчальні проєкти</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
+                Колекція інтерактивних веб-проєктів.
+            </h1>
+            <p class="text-neutral-400 text-base sm:text-lg max-w-2xl leading-relaxed">
+                Тут зібрано мої розробки: навчальні квести, веб-інструменти, міні-ігри та боти. Оберіть категорію або скористайтеся пошуком для зручної навігації.
+            </p>
+        </div>
+
+        <!-- Controls: Search & Category Filters -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-neutral-800/60">
+            <!-- Filter Pills -->
+            <div class="flex flex-wrap items-center gap-2" id="filterContainer">
+                <button data-filter="all" class="filter-btn active px-3.5 py-1.5 text-xs font-medium rounded-lg bg-white text-black transition-all">
+                    Усі (<span id="count-all">0</span>)
+                </button>
+                <button data-filter="Education" class="filter-btn px-3.5 py-1.5 text-xs font-medium rounded-lg bg-neutral-900 text-neutral-400 border border-neutral-800 hover:text-white hover:border-neutral-700 transition-all">
+                    Освіта & Квести (<span id="count-edu">0</span>)
+                </button>
+                <button data-filter="Tool" class="filter-btn px-3.5 py-1.5 text-xs font-medium rounded-lg bg-neutral-900 text-neutral-400 border border-neutral-800 hover:text-white hover:border-neutral-700 transition-all">
+                    Інструменти (<span id="count-tools">0</span>)
+                </button>
+                <button data-filter="Game" class="filter-btn px-3.5 py-1.5 text-xs font-medium rounded-lg bg-neutral-900 text-neutral-400 border border-neutral-800 hover:text-white hover:border-neutral-700 transition-all">
+                    Ігри & Платформи (<span id="count-games">0</span>)
+                </button>
+                <button data-filter="Telegram" class="filter-btn px-3.5 py-1.5 text-xs font-medium rounded-lg bg-neutral-900 text-neutral-400 border border-neutral-800 hover:text-white hover:border-neutral-700 transition-all">
+                    Telegram (<span id="count-tg">0</span>)
+                </button>
+            </div>
+
+            <!-- Search Input -->
+            <div class="relative w-full md:w-64">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-xs"></i>
+                <input type="text" id="searchInput" placeholder="Пошук проєктів..." 
+                       class="w-full bg-neutral-900 border border-neutral-800 text-neutral-200 placeholder-neutral-500 text-xs rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:border-neutral-600 transition-all">
+            </div>
+        </div>
+
+        <!-- PROJECTS GRID -->
+        <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards will be populated dynamically via JavaScript -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <div class="w-12 h-12 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center mx-auto text-neutral-500 mb-3">
+                <i class="fa-solid fa-folder-open text-lg"></i>
+            </div>
+            <h3 class="text-white font-medium mb-1">Проєктів не знайдено</h3>
+            <p class="text-neutral-500 text-xs">Спробуйте змінити пошуковий запит або обрати іншу категорію.</p>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-neutral-800/60 py-8 bg-neutral-950/40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-neutral-500">
+                &copy; <span id="year"></span> whyuxavier. Усі права захищено.
+            </p>
+            <div class="flex items-center gap-4 text-xs text-neutral-400">
+                <a href="https://github.com/whyuxavier" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
+                    <i class="fa-brands fa-github mr-1"></i> GitHub Profile
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INFO MODAL [i] -->
+    <div id="infoModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200">
+        <div id="modalContent" class="bg-neutral-900 border border-neutral-800 rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-200 relative">
+            
+            <!-- Close Button -->
+            <button id="closeModal" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white flex items-center justify-center transition-all">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-neutral-700 to-neutral-900 border border-neutral-700 flex items-center justify-center text-white font-bold text-xl shadow-inner">
+                    W
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white tracking-tight">Про розробника</h3>
+                    <p class="text-xs text-neutral-400">whyuxavier / GitHub Portfolio</p>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="space-y-4 text-sm text-neutral-300 leading-relaxed border-t border-neutral-800 pt-4">
+                <p>
+                    Вітаю! На цьому сайті зібрані мої основні веб-розробки, інтерактивні навчальні квести та корисні цифрові інструменти.
+                </p>
+                <p class="text-xs text-neutral-400">
+                    Усі проєкти створені для спрощення навчання, вирішення конкретних завдань та проведення інтерактивних заходів.
+                </p>
+
+                <!-- GitHub Direct Link -->
+                <div class="pt-2">
+                    <a href="https://github.com/whyuxavier" target="_blank" rel="noopener noreferrer"
+                       class="flex items-center justify-between w-full p-3 rounded-xl bg-neutral-800 hover:bg-neutral-750 border border-neutral-700/80 hover:border-neutral-600 text-white font-medium transition-all group">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-github text-xl"></i>
+                            <span class="text-xs font-semibold">GitHub Репозиторії</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-neutral-400 group-hover:text-white transition-colors"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="mt-6 pt-4 border-t border-neutral-800 flex justify-end">
+                <button id="closeModalBtn" class="px-4 py-2 text-xs font-medium rounded-lg bg-neutral-800 hover:bg-neutral-700 text-white transition-colors">
+                    Закрити
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Project Data Definition
+        const projects = [
+            {
+                id: 'tg-bot',
+                title: 'Бот у Telegram',
+                url: 'https://t.me/bor_alert',
+                description: 'Телеграм-бот сповіщень та корисних інструментів (bor_alert).',
+                category: 'Telegram',
+                tagText: 'Telegram Bot / Python',
+                iconClass: 'fa-paper-plane',
+                accentColor: 'from-sky-500/10 to-blue-500/5',
+                borderColor: 'group-hover:border-sky-500/50',
+                badgeBg: 'bg-sky-500/10 text-sky-400 border-sky-500/20'
+            },
+            {
+                id: 'it-alias',
+                title: 'Інформатичний Еліас',
+                url: 'https://whyuxavier.github.io/it-alias/',
+                description: 'Інтерактивна карткова гра на роз\'яснення та пояснення термінів з інформатики.',
+                category: 'Game',
+                tagText: 'Web Game / Education',
+                iconClass: 'fa-gamepad',
+                accentColor: 'from-purple-500/10 to-pink-500/5',
+                borderColor: 'group-hover:border-purple-500/50',
+                badgeBg: 'bg-purple-500/10 text-purple-400 border-purple-500/20'
+            },
+            {
+                id: 'pixelka',
+                title: 'Піксельний редактор',
+                url: 'https://whyuxavier.github.io/pixelka/',
+                description: 'Зручний веб-інструмент для створення та малювання піксель-арту (pixelka).',
+                category: 'Tool',
+                tagText: 'Web Tool / Canvas',
+                iconClass: 'fa-palette',
+                accentColor: 'from-amber-500/10 to-orange-500/5',
+                borderColor: 'group-hover:border-amber-500/50',
+                badgeBg: 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+            },
+            {
+                id: 'qr-creator',
+                title: 'Генератор QR-кодів',
+                url: 'https://whyuxavier.github.io/qr-creator/',
+                description: 'Швидке створення, налаштування та завантаження QR-кодів прямо у браузері.',
+                category: 'Tool',
+                tagText: 'Web Tool / Generator',
+                iconClass: 'fa-qrcode',
+                accentColor: 'from-emerald-500/10 to-teal-500/5',
+                borderColor: 'group-hover:border-emerald-500/50',
+                badgeBg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+            },
+            {
+                id: 'cyber-tournament',
+                title: 'Сайт для кібертурніру',
+                url: 'https://whyuxavier.github.io/cyber-tournament/',
+                description: 'Вебплатформа для організації, сітки та проведення кіберспортивних турнірів.',
+                category: 'Game',
+                tagText: 'Web Platform / Esports',
+                iconClass: 'fa-trophy',
+                accentColor: 'from-red-500/10 to-rose-500/5',
+                borderColor: 'group-hover:border-red-500/50',
+                badgeBg: 'bg-red-500/10 text-red-400 border-red-500/20'
+            },
+            {
+                id: 'data-analysis-quest',
+                title: 'Аналіз даних (10 клас)',
+                url: 'https://whyuxavier.github.io/data-analysis-quest/',
+                description: 'Інтерактивний тест-квест з аналізу даних для учнів 10 класу.',
+                category: 'Education',
+                tagText: 'Education / Quest',
+                iconClass: 'fa-chart-pie',
+                accentColor: 'from-indigo-500/10 to-violet-500/5',
+                borderColor: 'group-hover:border-indigo-500/50',
+                badgeBg: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
+            },
+            {
+                id: 'text-document-quest',
+                title: 'Текстові документи (9 клас)',
+                url: 'https://whyuxavier.github.io/text-document-quest/',
+                description: 'Інтерактивний навчально-ігровий тест з опрацювання текстових документів для 9 класу.',
+                category: 'Education',
+                tagText: 'Education / Quest',
+                iconClass: 'fa-file-lines',
+                accentColor: 'from-cyan-500/10 to-blue-500/5',
+                borderColor: 'group-hover:border-cyan-500/50',
+                badgeBg: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
+            }
+        ];
+
+        // State variables
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // DOM Elements
+        const projectsGrid = document.getElementById('projectsGrid');
+        const emptyState = document.getElementById('emptyState');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // Render projects
+        function renderProjects() {
+            projectsGrid.innerHTML = '';
+
+            const filteredProjects = projects.filter(project => {
+                const matchesFilter = currentFilter === 'all' || project.category === currentFilter;
+                const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                      project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                      project.tagText.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesFilter && matchesSearch;
+            });
+
+            if (filteredProjects.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                
+                filteredProjects.forEach(project => {
+                    const card = document.createElement('a');
+                    card.href = project.url;
+                    card.target = '_blank';
+                    card.rel = 'noopener noreferrer';
+                    card.className = `glass-card group rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:no-underline ${project.borderColor}`;
+
+                    card.innerHTML = `
+                        <!-- Subtle Gradient Background Effect -->
+                        <div class="absolute inset-0 bg-gradient-to-br ${project.accentColor} opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div class="relative z-10">
+                            <!-- Thumbnail / Header Icon & External Link Indicator -->
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-200 group-hover:scale-105 group-hover:border-neutral-700 transition-all shadow-md">
+                                    <i class="fa-solid ${project.iconClass} text-xl"></i>
+                                </div>
+                                <span class="w-8 h-8 rounded-full bg-neutral-900/80 border border-neutral-800 flex items-center justify-center text-neutral-500 group-hover:text-white group-hover:border-neutral-600 transition-all">
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                </span>
+                            </div>
+
+                            <!-- Title -->
+                            <h2 class="text-lg font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors flex items-center gap-2">
+                                ${project.title}
+                            </h2>
+
+                            <!-- Description -->
+                            <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
+                                ${project.description}
+                            </p>
+                        </div>
+
+                        <!-- Badge Footer -->
+                        <div class="relative z-10 pt-4 border-t border-neutral-800/80 flex items-center justify-between">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium border ${project.badgeBg}">
+                                ${project.tagText}
+                            </span>
+                            <span class="text-[11px] text-neutral-500 group-hover:text-neutral-300 transition-colors font-medium">
+                                Відкрити <i class="fa-solid fa-chevron-right text-[9px] ml-0.5"></i>
+                            </span>
+                        </div>
+                    `;
+
+                    projectsGrid.appendChild(card);
+                });
+            }
+
+            updateCounts();
+        }
+
+        // Update counts in filter buttons
+        function updateCounts() {
+            document.getElementById('count-all').textContent = projects.length;
+            document.getElementById('count-edu').textContent = projects.filter(p => p.category === 'Education').length;
+            document.getElementById('count-tools').textContent = projects.filter(p => p.category === 'Tool').length;
+            document.getElementById('count-games').textContent = projects.filter(p => p.category === 'Game').length;
+            document.getElementById('count-tg').textContent = projects.filter(p => p.category === 'Telegram').length;
+        }
+
+        // Filter button click handler
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-white', 'text-black', 'active');
+                    b.classList.add('bg-neutral-900', 'text-neutral-400', 'border-neutral-800');
+                });
+
+                btn.classList.remove('bg-neutral-900', 'text-neutral-400', 'border-neutral-800');
+                btn.classList.add('bg-white', 'text-black', 'active');
+
+                currentFilter = btn.dataset.filter;
+                renderProjects();
+            });
+        });
+
+        // Search input handler
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim();
+            renderProjects();
+        });
+
+        // MODAL LOGIC
+        const infoBtn = document.getElementById('infoBtn');
+        const infoModal = document.getElementById('infoModal');
+        const modalContent = document.getElementById('modalContent');
+        const closeModal = document.getElementById('closeModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        function openModal() {
+            infoModal.classList.remove('hidden');
+            setTimeout(() => {
+                infoModal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function hideModal() {
+            infoModal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                infoModal.classList.add('hidden');
+            }, 200);
+        }
+
+        infoBtn.addEventListener('click', openModal);
+        closeModal.addEventListener('click', hideModal);
+        closeModalBtn.addEventListener('click', hideModal);
+
+        // Close modal on backdrop click
+        infoModal.addEventListener('click', (e) => {
+            if (e.target === infoModal) {
+                hideModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !infoModal.classList.contains('hidden')) {
+                hideModal();
+            }
+        });
+
+        // Set Current Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Initial Render
+        renderProjects();
+    </script>
+</body>
+</html>
