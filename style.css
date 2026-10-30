@@ -187,6 +187,8 @@ button, input, select { font: inherit; color: inherit; }
 }
 .tip-next:hover { color: var(--text); background: var(--surface-2); border-color: var(--border); }
 .tip-next svg { width: 14px; height: 14px; }
+.tip-next[hidden] { display: none; }
+.tip-card.is-loading .tip-head span, .tip-card.is-loading .tip-text { opacity: 0; }
 .tip-text { margin: 6px 0 0; font-size: .9rem; line-height: 1.45; color: var(--text-2); }
 /* «хвостик» бульбашки, що вказує на вікно */
 .tip-card::after {
