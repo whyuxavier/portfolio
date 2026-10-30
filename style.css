@@ -170,7 +170,30 @@ button, input, select { font: inherit; color: inherit; }
 .lead { margin: 0 0 26px; color: var(--text-2); font-size: 1.05rem; max-width: 52ch; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
-.hero-art { position: relative; padding: 26px 18px 30px; }
+.hero-art { position: relative; padding: 0 18px 30px; }
+
+/* Порада дня / жарт над ілюстрацією */
+.tip-card {
+  position: relative; z-index: 2; margin: 0 0 16px 6px; max-width: 440px; width: fit-content;
+  padding: 10px 12px 12px 14px; border: 1px solid var(--border-strong); border-radius: 12px;
+  background: var(--surface); box-shadow: var(--shadow);
+}
+.tip-head { display: flex; align-items: center; gap: 7px; font: 600 .72rem/1 var(--mono); color: var(--muted); letter-spacing: .03em; }
+.tip-head .tip-ic { width: 15px; height: 15px; color: var(--star); flex: none; }
+.tip-card.is-joke .tip-ic { color: var(--accent); }
+.tip-next {
+  margin-left: auto; display: grid; place-items: center; width: 26px; height: 26px; padding: 0;
+  border: 1px solid transparent; border-radius: 7px; background: none; color: var(--muted); cursor: pointer;
+}
+.tip-next:hover { color: var(--text); background: var(--surface-2); border-color: var(--border); }
+.tip-next svg { width: 14px; height: 14px; }
+.tip-text { margin: 6px 0 0; font-size: .9rem; line-height: 1.45; color: var(--text-2); }
+/* «хвостик» бульбашки, що вказує на вікно */
+.tip-card::after {
+  content: ""; position: absolute; left: 30px; bottom: -7px; width: 12px; height: 12px;
+  background: var(--surface); border-right: 1px solid var(--border-strong); border-bottom: 1px solid var(--border-strong);
+  transform: rotate(45deg);
+}
 .hero-svg { display: block; width: 100%; height: auto; overflow: visible; }
 
 .art-tag {
@@ -179,11 +202,7 @@ button, input, select { font: inherit; color: inherit; }
   background: var(--surface); box-shadow: var(--shadow);
   font-size: .76rem; color: var(--text-2); white-space: nowrap;
 }
-.art-tag--api { top: 0; left: 0; font-family: var(--mono); }
-.art-tag--api b { color: var(--blue); font-weight: 700; }
-.art-tag--cats { left: 4%; bottom: 0; }
-.art-tag--star { right: 4%; bottom: 0; }
-.art-tag--star svg { width: 13px; height: 13px; color: var(--star); }
+.art-tag--cats { right: 4%; bottom: 0; }
 .art-tag i, .chip i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
 .art-tag i + i, .art-tag i { margin-left: 2px; }
 .c-edu { background: var(--c-edu); } .c-games { background: var(--c-games); }
@@ -218,11 +237,13 @@ button, input, select { font: inherit; color: inherit; }
   .a-card2 { animation: slideIn .5s var(--ease) .5s backwards; }
   .a-card3 { animation: slideIn .5s var(--ease) .65s backwards; }
   .contrib rect { animation: pop .35s var(--ease) backwards; animation-delay: calc(.8s + var(--d, 0s)); }
-  .art-tag { animation: rise .45s var(--ease) 1.1s backwards; }
+  .art-tag, .tip-card { animation: rise .45s var(--ease) 1.1s backwards; }
+  .tip-text.is-swapping { animation: fadeIn .3s var(--ease); }
 }
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
 @keyframes slideIn { from { opacity: 0; transform: translateX(16px); } }
 @keyframes pop { from { opacity: 0; } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(3px); } }
 
 /* ---------- Stats ---------- */
 .stats { margin-top: -1px; padding-top: 28px; }
@@ -411,11 +432,11 @@ button, input, select { font: inherit; color: inherit; }
   .sort { flex: 1 1 100%; }
   .hero-inner { padding-top: 32px; padding-bottom: 36px; }
   .hero-actions .btn { flex: 1 1 auto; }
-  .hero-art { padding: 30px 0 34px; }
+  .hero-art { padding: 0 0 34px; }
+  .tip-card { max-width: none; width: auto; margin-left: 0; }
+  .tip-text { font-size: .86rem; }
   .art-tag { font-size: .7rem; padding: 5px 8px; }
-  .art-tag--cats { left: 0; }
-  .art-tag--star { right: 0; }
-  .art-tag--api { left: 0; }
+  .art-tag--cats { right: 0; }
   .stats-grid { gap: 8px; }
   .stat { padding: 12px; }
   .stat dt { font-size: .74rem; }
@@ -428,7 +449,7 @@ button, input, select { font: inherit; color: inherit; }
   .card-actions { padding: 12px 16px; }
 }
 @media (max-width: 400px) {
-  .art-tag--cats { display: none; }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
