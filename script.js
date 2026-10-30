@@ -807,67 +807,66 @@
   }
 
 
-  /* ---------------- Порада дня / жарт ---------------- */
-  const TIPS = [
-    ['tip', 'Ctrl+Shift+P у VS Code відкриває палітру команд — там є майже все.'],
-    ['tip', 'Пиши коміт-повідомлення так, ніби пояснюєш зміну собі через пів року.'],
-    ['tip', 'Перш ніж питати, чому код не працює, дочитай повідомлення про помилку до кінця.'],
-    ['tip', 'console.table() показує масив об’єктів у вигляді охайної таблиці.'],
-    ['tip', 'Alt + клік у VS Code ставить кілька курсорів одночасно.'],
-    ['tip', 'Додай topics до репозиторію — так його легше знайти на GitHub.'],
-    ['tip', 'F12 відкриває інструменти розробника. Вкладка Console — твій найкращий друг.'],
-    ['tip', 'Короткі функції легше читати, тестувати й використовувати повторно.'],
-    ['tip', 'Ctrl+/ коментує або розкоментовує рядок майже в будь-якому редакторі.'],
-    ['tip', 'Назви змінних — це документація, яку читають найчастіше.'],
-    ['tip', 'Не можеш знайти помилку? Поясни код уголос гумовій качечці.'],
-    ['tip', 'git status перед кожним комітом рятує від випадкових файлів у репозиторії.'],
-    ['tip', 'Подивись через DevTools, як зроблені твої улюблені сайти, — це найкращий підручник.'],
-    ['tip', 'П’ять хвилин перерви часто знаходять баг швидше, ніж година дебагу.'],
-    ['tip', 'Alt + ↑ / ↓ у VS Code переміщує рядок вгору чи вниз без копіювання.'],
-    ['joke', 'Це не баг, а незадокументована функція.'],
-    ['joke', 'Є 10 типів людей: ті, хто розуміє двійковий код, і ті, хто ні.'],
-    ['joke', 'Скільки програмістів треба, щоб замінити лампочку? Жодного: це апаратна проблема.'],
-    ['joke', 'Працює — не чіпай. Не працює — теж не чіпай: раптом запрацює.'],
-    ['joke', 'Найчесніший коментар у коді: «Не знаю, як це працює, але не видаляй».'],
-    ['joke', 'Програміст — це пристрій, який перетворює чай на код.'],
-    ['joke', '«А на моєму комп’ютері працює» — найпопулярніша фраза в IT.'],
-    ['joke', 'Дебагінг — детектив, у якому ти водночас слідчий і злочинець.'],
-    ['joke', 'Чому програмісти плутають Гелловін і Різдво? Бо Oct 31 = Dec 25.'],
-    ['joke', '99 маленьких багів у коді. Виправив один — тепер їх 127.'],
-    ['joke', 'Посунув div на один піксель — переїхала вся сторінка.'],
-    ['joke', 'Учень: «Я все зробив!» Інтерпретатор: «SyntaxError».'],
-    ['joke', 'Ctrl+Z — найкраща кнопка, якої так бракує в реальному житті.'],
-    ['joke', 'Оптиміст бачить склянку наполовину повною, програміст — удвічі більшою, ніж треба.'],
-    ['joke', 'Мій код не має багів. Він просто має несподівані можливості.'],
-  ];
+  /* ---------------- Порада дня / жарт ----------------
+     Тексти лежать у tips.json — редагуйте їх там, код чіпати не треба. */
+  const TIPS_URL = 'tips.json';
   const TIP_KEY = 'portfolio-tip-last';
+  const TIP_MAX_LENGTH = 160;
+  let tipList = [];   // [{ kind: 'tip' | 'joke', text }]
   let tipIndex = -1;
 
-  function pickTip(exclude) {
-    if (TIPS.length < 2) return 0;
+  function cleanTipList(raw, key, kind) {
+    const list = raw && Array.isArray(raw[key]) ? raw[key] : [];
+    const out = [];
+    for (const item of list) {
+      if (typeof item !== 'string' || !item.trim()) continue;
+      const text = item.trim();
+      if (text.length > TIP_MAX_LENGTH) { console.warn(`[portfolio] Задовгий запис у tips.json (${text.length} > ${TIP_MAX_LENGTH}): «${text.slice(0, 40)}…»`); continue; }
+      out.push({ kind, text });
+    }
+    return out;
+  }
+  function pickTip(excludeText) {
+    if (tipList.length < 2) return 0;
     let i;
-    do { i = Math.floor(Math.random() * TIPS.length); } while (i === exclude);
+    do { i = Math.floor(Math.random() * tipList.length); } while (tipList[i].text === excludeText);
     return i;
   }
   function showTip(i, animate) {
     const card = $('#tipCard');
     const text = $('#tipText');
-    if (!card || !text) return;
-    const [kind, msg] = TIPS[i];
+    if (!card || !text || !tipList[i]) return;
+    const { kind, text: msg } = tipList[i];
     tipIndex = i;
     card.classList.toggle('is-joke', kind === 'joke');
     $('#tipKind').textContent = kind === 'joke' ? 'IT-жарт' : 'Порада дня';
-    text.textContent = msg;
+    text.textContent = msg; // лише як текст
     if (animate) { text.classList.remove('is-swapping'); void text.offsetWidth; text.classList.add('is-swapping'); }
-    try { localStorage.setItem(TIP_KEY, String(i)); } catch { /* ignore */ }
+    // Запам'ятовуємо сам текст, а не номер: після редагування файлу номери зсуваються
+    try { localStorage.setItem(TIP_KEY, msg); } catch { /* ignore */ }
   }
-  function initTips() {
-    let last = -1;
-    try { last = Number(localStorage.getItem(TIP_KEY)); } catch { /* ignore */ }
-    // Нова порада при кожному відкритті, без повтору попередньої
-    showTip(pickTip(Number.isInteger(last) ? last : -1), false);
+  async function initTips() {
+    const card = $('#tipCard');
+    if (!card) return;
     const btn = $('#tipNext');
-    if (btn) btn.addEventListener('click', () => showTip(pickTip(tipIndex), true));
+    try {
+      const res = await fetchWithTimeout(TIPS_URL, { cache: 'no-cache' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const raw = await res.json();
+      tipList = [...cleanTipList(raw, 'tips', 'tip'), ...cleanTipList(raw, 'jokes', 'joke')];
+    } catch (err) {
+      console.warn('[portfolio] Не вдалося прочитати tips.json — лишаю пораду за замовчуванням.', err);
+    }
+    if (tipList.length) {
+      let last = '';
+      try { last = localStorage.getItem(TIP_KEY) || ''; } catch { /* ignore */ }
+      showTip(pickTip(last), false); // нова порада при кожному відкритті, без повтору попередньої
+    }
+    if (btn) {
+      if (tipList.length > 1) btn.addEventListener('click', () => showTip(pickTip(tipList[tipIndex] && tipList[tipIndex].text), true));
+      else btn.hidden = true;
+    }
+    card.classList.remove('is-loading');
   }
 
   /* ---------------- Старт ---------------- */
@@ -882,7 +881,7 @@
     $('#year').textContent = String(new Date().getFullYear());
 
     drawContrib();
-    initTips();
+    initTips(); // не чекаємо: порада вантажиться паралельно з проєктами
     bindUI();
     showSkeletons();
     setStatus();
