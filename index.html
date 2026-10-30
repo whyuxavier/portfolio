@@ -1,547 +1,229 @@
-<!DOCTYPE html>
-<html lang="uk" class="light">
+<!doctype html>
+<html lang="uk" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Портфоліо проєктів — whyuxavier</title>
-    <!-- Modern SVG Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2318181b'/><text x='50%' y='65%' font-family='Inter, sans-serif' font-weight='800' font-size='55' fill='%23ffffff' text-anchor='middle'>W</text><circle cx='76' cy='24' r='8' fill='%2310b981'/></svg>">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fcfcfc;
-            color: #18181b;
-            transition: background-color 0.2s ease, color 0.2s ease;
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>whyuxavier — портфоліо проєктів</title>
+  <meta name="description" content="Портфоліо whyuxavier: освітні проєкти, інтерактивні ігри та корисні інструменти. Каталог автоматично збирається з публічних репозиторіїв GitHub.">
+  <meta name="author" content="whyuxavier">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0d0f17">
 
-        html.dark body {
-            background-color: #0a0a0a;
-            color: #f4f4f5;
-        }
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="whyuxavier">
+  <meta property="og:title" content="whyuxavier — портфоліо проєктів">
+  <meta property="og:description" content="Освітні проєкти, інтерактивні ігри та корисні інструменти. Каталог автоматично оновлюється з GitHub.">
+  <meta name="twitter:card" content="summary">
+  <!-- Canonical / og:url не вказано навмисно: додайте їх, коли буде відома остаточна адреса сайту (див. README). -->
 
-        .glass-header {
-            background: rgba(252, 252, 252, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        html.dark .glass-header {
-            background: rgba(10, 10, 10, 0.85);
-        }
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1.5' y='1.5' width='29' height='29' rx='7' fill='%23141724' stroke='%233b3561' stroke-width='1.5'/%3E%3Cpath d='M12 9.5c-2 0-2.8 1-2.8 2.8v1.6c0 1.2-.6 1.9-1.8 2.1 1.2.2 1.8.9 1.8 2.1v1.6c0 1.8.8 2.8 2.8 2.8M20 9.5c2 0 2.8 1 2.8 2.8v1.6c0 1.2.6 1.9 1.8 2.1-1.2.2-1.8.9-1.8 2.1v1.6c0 1.8-.8 2.8-2.8 2.8' fill='none' stroke='%23a78bfa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16 12.6l1 2.1 2.3.3-1.7 1.6.4 2.3-2-1.1-2 1.1.4-2.3-1.7-1.6 2.3-.3z' fill='%237dd3fc'/%3E%3C/svg%3E">
 
-        .clean-card {
-            background: #ffffff;
-            border: 1px solid #e4e4e7;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        html.dark .clean-card {
-            background: #121212;
-            border-color: #262626;
-        }
-
-        .clean-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.06);
-        }
-        html.dark .clean-card:hover {
-            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.6);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #fcfcfc;
-        }
-        html.dark ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #d4d4d8;
-            border-radius: 3px;
-        }
-        html.dark ::-webkit-scrollbar-thumb {
-            background: #3f3f46;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a1a1aa;
-        }
-    </style>
+  <!-- Застосовуємо збережену тему ще до відмальовки, щоб не було «спалаху» -->
+  <script>
+    try {
+      var t = localStorage.getItem('portfolio-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-zinc-900 selection:text-white dark:selection:bg-zinc-100 dark:selection:text-zinc-900">
+<body>
+  <a class="skip-link" href="#projects">Перейти до проєктів</a>
 
-    <!-- HEADER / NAVIGATION -->
-    <header class="sticky top-0 z-40 glass-header border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <!-- Logo / Title -->
-            <a href="#" class="flex items-center gap-2.5 group">
-                <div class="w-7 h-7 rounded-md bg-zinc-900 dark:bg-zinc-100 flex items-center justify-center text-white dark:text-zinc-900 font-bold text-xs group-hover:bg-zinc-800 dark:group-hover:bg-zinc-200 transition-colors">
-                    W
-                </div>
-                <span class="font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 text-base">
-                    whyuxavier
-                </span>
-            </a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./" aria-label="whyuxavier — на головну">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="29" height="29" rx="7"/>
+          <path d="M12 9.5c-2 0-2.8 1-2.8 2.8v1.6c0 1.2-.6 1.9-1.8 2.1 1.2.2 1.8.9 1.8 2.1v1.6c0 1.8.8 2.8 2.8 2.8M20 9.5c2 0 2.8 1 2.8 2.8v1.6c0 1.2.6 1.9 1.8 2.1-1.2.2-1.8.9-1.8 2.1v1.6c0 1.8-.8 2.8-2.8 2.8"/>
+          <path class="brand-star" d="M16 12.6l1 2.1 2.3.3-1.7 1.6.4 2.3-2-1.1-2 1.1.4-2.3-1.7-1.6 2.3-.3z"/>
+        </svg>
+        <span>whyuxavier</span>
+      </a>
 
-            <!-- Right Controls: Theme Toggle & Info [i] -->
-            <div class="flex items-center gap-2">
-                <!-- Theme Toggle Button -->
-                <button id="themeBtn" aria-label="Змінити тему" title="Змінити тему"
-                        class="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200/80 dark:hover:bg-zinc-700 border border-zinc-200/80 dark:border-zinc-700 flex items-center justify-center text-zinc-700 dark:text-zinc-300 transition-all text-xs shadow-sm">
-                    <i id="themeIcon" class="fa-solid fa-moon"></i>
-                </button>
-
-                <!-- Info Button [i] -->
-                <button id="infoBtn" aria-label="Інформація про автора" title="Про автора"
-                        class="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200/80 dark:hover:bg-zinc-700 border border-zinc-200/80 dark:border-zinc-700 flex items-center justify-center text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all font-serif italic text-sm font-bold shadow-sm">
-                    i
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN CONTENT AREA -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
-        
-        <!-- Controls: Category Filters & Search Input -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-            <!-- Filter Pills -->
-            <div class="flex flex-wrap items-center gap-1.5" id="filterContainer">
-                <button data-filter="all" class="filter-btn active px-3 py-1.5 text-xs font-medium rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 transition-all shadow-sm">
-                    Усі (<span id="count-all">0</span>)
-                </button>
-                <button data-filter="Education" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/70 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all">
-                    Освіта (<span id="count-edu">0</span>)
-                </button>
-                <button data-filter="Tool" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/70 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all">
-                    Інструменти (<span id="count-tools">0</span>)
-                </button>
-                <button data-filter="Game" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/70 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all">
-                    Ігри (<span id="count-games">0</span>)
-                </button>
-                <button data-filter="Telegram" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/70 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all">
-                    Telegram (<span id="count-tg">0</span>)
-                </button>
-            </div>
-
-            <!-- Search Input -->
-            <div class="relative w-full md:w-56">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-xs"></i>
-                <input type="text" id="searchInput" placeholder="Пошук..." 
-                       class="w-full bg-zinc-100/80 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 text-xs rounded-full pl-8 pr-3 py-1.5 focus:outline-none focus:bg-white dark:focus:bg-zinc-800 focus:border-zinc-400 dark:focus:border-zinc-600 transition-all">
-            </div>
-        </div>
-
-        <!-- PROJECTS GRID -->
-        <div id="projectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <!-- Cards populated dynamically via JavaScript -->
-        </div>
-
-        <!-- Empty State -->
-        <div id="emptyState" class="hidden text-center py-16">
-            <div class="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center mx-auto text-zinc-400 mb-2">
-                <i class="fa-solid fa-folder-open text-sm"></i>
-            </div>
-            <h3 class="text-zinc-700 dark:text-zinc-300 font-medium text-sm mb-0.5">Нічого не знайдено</h3>
-            <p class="text-zinc-400 text-xs">Спробуйте змінити критерії пошуку.</p>
-        </div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="border-t border-zinc-200/70 dark:border-zinc-800/70 py-6 bg-zinc-50 dark:bg-zinc-950">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-2">
-            <p class="text-xs text-zinc-400 dark:text-zinc-500">
-                &copy; <span id="year"></span> whyuxavier. Всі розробки.
-            </p>
-        </div>
-    </footer>
-
-    <!-- INFO MODAL [i] -->
-    <div id="infoModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-900/40 dark:bg-black/70 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200">
-        <div id="modalContent" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl max-w-sm w-full p-6 shadow-xl transform scale-95 transition-transform duration-200 relative">
-            
-            <!-- Close Button -->
-            <button id="closeModal" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 flex items-center justify-center transition-all text-xs">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <!-- Modal Header -->
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-10 h-10 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-bold text-base flex items-center justify-center">
-                    W
-                </div>
-                <div>
-                    <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">whyuxavier</h3>
-                    <p class="text-xs text-zinc-400 dark:text-zinc-500">Веб-розробки & Проєкти</p>
-                </div>
-            </div>
-
-            <!-- Modal Body -->
-            <div class="space-y-3 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed border-t border-zinc-100 dark:border-zinc-800 pt-3">
-                <p>
-                    Персональна колекція інтерактивних навчальних квестів, корисних інструментів, телеграм-ботів та ігор.
-                </p>
-
-                <!-- Single GitHub Direct Link -->
-                <div class="pt-2">
-                    <a href="https://github.com/whyuxavier" target="_blank" rel="noopener noreferrer"
-                       class="flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-medium transition-all group">
-                        <div class="flex items-center gap-2.5">
-                            <i class="fa-brands fa-github text-base"></i>
-                            <span class="text-xs font-semibold">GitHub Профіль</span>
-                        </div>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-zinc-400 dark:text-zinc-500 group-hover:text-white dark:group-hover:text-zinc-900 transition-colors"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
+      <nav class="header-nav" aria-label="Основна навігація">
+        <a class="nav-link hide-sm" href="#projects">Проєкти</a>
+        <a class="nav-link" href="https://github.com/whyuxavier" target="_blank" rel="noopener noreferrer">
+          <svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span class="hide-sm">GitHub</span>
+          <span class="sr-only">Профіль whyuxavier на GitHub</span>
+        </a>
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Увімкнути світлу тему" title="Змінити тему">
+          <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+        </button>
+        <button class="icon-btn info-btn" id="infoOpen" type="button" aria-label="Про проєкт" aria-haspopup="dialog" title="Про проєкт">i</button>
+      </nav>
     </div>
+  </header>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // Theme Toggle Logic
-        function initTheme() {
-            const saved = localStorage.getItem('theme');
-            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-                document.getElementById('themeIcon').className = 'fa-solid fa-sun';
-            } else {
-                document.documentElement.classList.add('light');
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').className = 'fa-solid fa-moon';
-            }
-        }
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-pattern" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Портфоліо whyuxavier</p>
+          <h1 id="heroTitle">Створюю освітні проєкти, інтерактивні ігри та корисні інструменти.</h1>
+          <p class="lead">Цей каталог сам збирає мої публічні репозиторії з GitHub: нові проєкти з’являються тут автоматично, а картки ведуть на живе демо або на вихідний код.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">Переглянути проєкти</a>
+            <a class="btn btn-ghost" href="https://github.com/whyuxavier" target="_blank" rel="noopener noreferrer">
+              Профіль на GitHub
+              <svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M6 3h7v7M13 3 4 12"/></svg>
+            </a>
+          </div>
+        </div>
 
-        document.getElementById('themeBtn').addEventListener('click', () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            if (isDark) {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.classList.add('light');
-                localStorage.setItem('theme', 'light');
-                document.getElementById('themeIcon').className = 'fa-solid fa-moon';
-            } else {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-                localStorage.setItem('theme', 'dark');
-                document.getElementById('themeIcon').className = 'fa-solid fa-sun';
-            }
-        });
+        <div class="hero-art">
+          <!-- Тематичні деталі навколо ілюстрації -->
+          <span class="art-tag art-tag--api" aria-hidden="true"><b>GET</b> /users/whyuxavier/repos</span>
+          <span class="art-tag art-tag--cats" aria-hidden="true">
+            <i class="c-edu"></i>Освіта <i class="c-games"></i>Ігри <i class="c-tools"></i>Інструменти
+          </span>
+          <span class="art-tag art-tag--star" aria-hidden="true">
+            <svg viewBox="0 0 16 16"><path fill="currentColor" d="M8 .8l2.2 4.5 4.9.7-3.6 3.5.9 4.9L8 12.1l-4.4 2.3.9-4.9L.9 6l4.9-.7z"/></svg>
+            Справжні зірки GitHub
+          </span>
 
-        // Project Data Definition
-        const projects = [
-            {
-                id: 'tg-bot',
-                title: 'Бот у Telegram',
-                url: 'https://t.me/bor_alert',
-                description: 'Телеграм-бот сповіщень про тривогу.',
-                category: 'Telegram',
-                tagText: 'Telegram Bot',
-                iconClass: 'fa-paper-plane',
-                accentColor: 'from-sky-500/10 to-blue-500/5',
-                borderColor: 'hover:border-sky-400 dark:hover:border-sky-500',
-                badgeBg: 'bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 border-sky-200 dark:border-sky-800'
-            },
-            {
-                id: 'informatics_hub',
-                title: 'Про інформатику',
-                url: 'https://t.me/informatics_hub',
-                description: 'Телеграм-канал про інформатику та навчання.',
-                category: 'Telegram',
-                tagText: 'Telegram Channel',
-                iconClass: 'fa-chalkboard-user',
-                accentColor: 'from-indigo-500/10 to-blue-500/5',
-                borderColor: 'hover:border-indigo-400 dark:hover:border-indigo-500',
-                badgeBg: 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800'
-            },
-            {
-                id: 'it-alias',
-                title: 'Інформатичний Еліас',
-                url: 'https://whyuxavier.github.io/it-alias/',
-                description: 'Інтерактивна карткова гра з термінів інформатики.',
-                category: 'Game',
-                tagText: 'Web Game',
-                iconClass: 'fa-gamepad',
-                accentColor: 'from-purple-500/10 to-pink-500/5',
-                borderColor: 'hover:border-purple-400 dark:hover:border-purple-500',
-                badgeBg: 'bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-800'
-            },
-            {
-                id: 'ai-invaders',
-                title: 'AI Invaders',
-                url: 'https://whyuxavier.github.io/ai-invaders/',
-                description: '8-бітна гра в стилі Space Invaders: ти граєш за Claude і б’єш ChatGPT.',
-                category: 'Game',
-                tagText: 'Web Game',
-                iconClass: 'fa-rocket',
-                accentColor: 'from-orange-500/10 to-amber-500/5',
-                borderColor: 'hover:border-orange-400 dark:hover:border-orange-500',
-                badgeBg: 'bg-orange-50 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-800'
-            },
-            {
-                id: 'pixelka',
-                title: 'Піксельний редактор',
-                url: 'https://whyuxavier.github.io/pixelka/',
-                description: 'Веб-інструмент для малювання піксель-арту.',
-                category: 'Tool',
-                tagText: 'Web Tool',
-                iconClass: 'fa-palette',
-                accentColor: 'from-amber-500/10 to-orange-500/5',
-                borderColor: 'hover:border-amber-400 dark:hover:border-amber-500',
-                badgeBg: 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800'
-            },
-            {
-                id: 'qr-creator',
-                title: 'Генератор QR-кодів',
-                url: 'https://whyuxavier.github.io/qr-creator/',
-                description: 'Швидке створення та налаштування QR-кодів.',
-                category: 'Tool',
-                tagText: 'Generator',
-                iconClass: 'fa-qrcode',
-                accentColor: 'from-emerald-500/10 to-teal-500/5',
-                borderColor: 'hover:border-emerald-400 dark:hover:border-emerald-500',
-                badgeBg: 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
-            },
-            {
-                id: 'key_puzzle',
-                title: 'Клавіатурний пазл',
-                url: 'https://whyuxavier.github.io/key-puzzle/',
-                description: 'Навчальна гра: поверни розсипані клавіші на місця. Українська та англійська розкладки, три рівні складності.',
-                category: 'Game',
-                tagText: 'Навчальна гра',
-                iconClass: 'fa-keyboard',
-                accentColor: 'from-sky-500/10 to-emerald-500/5',
-                borderColor: 'hover:border-sky-400 dark:hover:border-sky-500',
-                badgeBg: 'bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 border-sky-200 dark:border-sky-800'
-            },
-            {
-                id: 'cyber-tournament',
-                title: 'Сайт для кібертурніру',
-                url: 'https://whyuxavier.github.io/cyber-tournament/',
-                description: 'Платформа для організації кіберспортивних турнірів.',
-                category: 'Game',
-                tagText: 'Web Platform',
-                iconClass: 'fa-trophy',
-                accentColor: 'from-rose-500/10 to-red-500/5',
-                borderColor: 'hover:border-rose-400 dark:hover:border-rose-500',
-                badgeBg: 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-800'
-            },
-            {
-                id: 'data-analysis-quest',
-                title: 'Аналіз даних (10 клас)',
-                url: 'https://whyuxavier.github.io/data-analysis-quest/',
-                description: 'Інтерактивний тест-квест з аналізу даних.',
-                category: 'Education',
-                tagText: 'Quest / 10 клас',
-                iconClass: 'fa-chart-pie',
-                accentColor: 'from-indigo-500/10 to-violet-500/5',
-                borderColor: 'hover:border-indigo-400 dark:hover:border-indigo-500',
-                badgeBg: 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800'
-            },
-            {
-                id: 'text-document-quest',
-                title: 'Текстові документи (9 клас)',
-                url: 'https://whyuxavier.github.io/text-document-quest/',
-                description: 'Навчальний тест-квест з опрацювання текстів.',
-                category: 'Education',
-                tagText: 'Quest / 9 клас',
-                iconClass: 'fa-file-lines',
-                accentColor: 'from-cyan-500/10 to-blue-500/5',
-                borderColor: 'hover:border-cyan-400 dark:hover:border-cyan-500',
-                badgeBg: 'bg-cyan-50 dark:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 border-cyan-200 dark:border-cyan-800'
-            },
-            {
-                id: 'python-quest',
-                title: 'Квест Python (8 клас)',
-                url: 'https://whyuxavier.github.io/python-quiz/',
-                description: 'Інтерактивна програма з Python з рівнями та кодом.',
-                category: 'Education',
-                tagText: 'Quest / 8 клас',
-                iconClass: 'fa-staff-snake',
-                accentColor: 'from-emerald-500/10 to-teal-500/5',
-                borderColor: 'hover:border-emerald-400 dark:hover:border-emerald-500',
-                badgeBg: 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
-            }
-        ];
+          <svg class="hero-svg" viewBox="0 0 480 360" role="img" aria-labelledby="heroArtTitle heroArtDesc">
+            <title id="heroArtTitle">Ілюстрація: каталог репозиторіїв GitHub</title>
+            <desc id="heroArtDesc">Вікно браузера із запитом до GitHub API, картками проєктів різних категорій і графіком активності.</desc>
+            <!-- вікно -->
+            <rect class="w-frame" x="8" y="8" width="464" height="344" rx="16"/>
+            <path class="w-bar" d="M8 24a16 16 0 0 1 16-16h432a16 16 0 0 1 16 16v20H8z"/>
+            <circle class="w-dot1" cx="30" cy="26" r="5"/><circle class="w-dot2" cx="47" cy="26" r="5"/><circle class="w-dot3" cx="64" cy="26" r="5"/>
+            <rect class="w-url" x="88" y="17" width="300" height="18" rx="9"/>
+            <text class="w-url-t" x="102" y="30">api.github.com/users/whyuxavier/repos</text>
 
-        // State variables
-        let currentFilter = 'all';
-        let searchQuery = '';
+            <!-- код запиту -->
+            <g class="code a-code">
+              <rect class="code-bg" x="24" y="60" width="176" height="150" rx="10"/>
+              <text x="38" y="84"><tspan class="k">const</tspan> repos =</text>
+              <text x="38" y="102"><tspan class="k">await</tspan> <tspan class="f">fetch</tspan>(url)</text>
+              <text x="38" y="126"><tspan class="m">// авто-категорії</tspan></text>
+              <text x="38" y="144">repos.<tspan class="f">map</tspan>(r =&gt;</text>
+              <text x="50" y="162"><tspan class="f">classify</tspan>(r))</text>
+              <text x="38" y="186"><tspan class="f">render</tspan>(cards)<tspan class="caret">▍</tspan></text>
+            </g>
 
-        // DOM Elements
-        const projectsGrid = document.getElementById('projectsGrid');
-        const emptyState = document.getElementById('emptyState');
-        const searchInput = document.getElementById('searchInput');
-        const filterBtns = document.querySelectorAll('.filter-btn');
+            <!-- картки проєктів -->
+            <g class="card a-card1">
+              <rect class="card-bg" x="216" y="60" width="240" height="44" rx="10"/>
+              <circle class="c-edu-f" cx="234" cy="82" r="5"/>
+              <rect class="ln-strong" x="248" y="72" width="96" height="8" rx="4"/>
+              <rect class="ln" x="248" y="86" width="140" height="6" rx="3"/>
+              <rect class="pill-demo" x="404" y="73" width="40" height="18" rx="9"/>
+              <text class="pill-t" x="424" y="86" text-anchor="middle">Демо</text>
+            </g>
+            <g class="card a-card2">
+              <rect class="card-bg" x="216" y="114" width="240" height="44" rx="10"/>
+              <circle class="c-games-f" cx="234" cy="136" r="5"/>
+              <rect class="ln-strong" x="248" y="126" width="74" height="8" rx="4"/>
+              <rect class="ln" x="248" y="140" width="120" height="6" rx="3"/>
+              <path class="star-f" d="M420 128.5l2 4.1 4.5.6-3.3 3.2.8 4.4-4-2.1-4 2.1.8-4.4-3.3-3.2 4.5-.6z"/>
+              <rect class="ln" x="430" y="133" width="14" height="6" rx="3"/>
+            </g>
+            <g class="card a-card3">
+              <rect class="card-bg" x="216" y="168" width="240" height="44" rx="10"/>
+              <circle class="c-tools-f" cx="234" cy="190" r="5"/>
+              <rect class="ln-strong" x="248" y="180" width="110" height="8" rx="4"/>
+              <rect class="ln" x="248" y="194" width="88" height="6" rx="3"/>
+              <path class="code-ic" d="M412 184l-6 6 6 6M432 184l6 6-6 6M424 182l-4 16"/>
+            </g>
 
-        // Render projects
-        function renderProjects() {
-            projectsGrid.innerHTML = '';
+            <!-- графік активності -->
+            <text class="lbl" x="24" y="240">активність</text>
+            <g class="contrib" id="heroContrib"></g>
+          </svg>
+        </div>
+      </div>
+    </section>
 
-            const filteredProjects = projects.filter(project => {
-                const matchesFilter = currentFilter === 'all' || project.category === currentFilter;
-                const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                    project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                    project.tagText.toLowerCase().includes(searchQuery.toLowerCase());
-                return matchesFilter && matchesSearch;
-            });
+    <!-- ===== СТАТИСТИКА ===== -->
+    <section class="container stats" aria-label="Статистика репозиторіїв">
+      <dl class="stats-grid" id="stats">
+        <div class="stat"><dt>Проєктів</dt><dd data-stat="total">—</dd></div>
+        <div class="stat"><dt>Зірок на GitHub</dt><dd data-stat="stars">—</dd></div>
+        <div class="stat"><dt>З живим демо</dt><dd data-stat="demos">—</dd></div>
+        <div class="stat stat-cats"><dt>За категоріями</dt><dd data-stat="cats">—</dd></div>
+      </dl>
+    </section>
 
-            if (filteredProjects.length === 0) {
-                emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
-                
-                filteredProjects.forEach(project => {
-                    const card = document.createElement('a');
-                    card.href = project.url;
-                    card.target = '_blank';
-                    card.rel = 'noopener noreferrer';
-                    card.className = `clean-card group rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden transition-all duration-200 hover:no-underline ${project.borderColor}`;
+    <!-- ===== ПРОЄКТИ ===== -->
+    <section class="container projects" id="projects" aria-labelledby="projectsTitle" tabindex="-1">
+      <div class="projects-head">
+        <h2 id="projectsTitle">Проєкти</h2>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </div>
 
-                    card.innerHTML = `
-                        <!-- Hover Gradient Effect -->
-                        <div class="absolute inset-0 bg-gradient-to-br ${project.accentColor} opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        
-                        <div class="relative z-10">
-                            <!-- Icon & External Arrow -->
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="w-10 h-10 rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-700 dark:text-zinc-300 group-hover:scale-105 group-hover:bg-white dark:group-hover:bg-zinc-700 transition-all shadow-sm">
-                                    <i class="fa-solid ${project.iconClass} text-base"></i>
-                                </div>
-                                <span class="text-zinc-300 dark:text-zinc-600 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
-                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-                                </span>
-                            </div>
+      <div class="toolbar">
+        <div class="filters" role="group" aria-label="Категорії" id="filters">
+          <button type="button" class="chip is-active" data-cat="all" aria-pressed="true">Усі <span class="count">0</span></button>
+          <button type="button" class="chip" data-cat="education" aria-pressed="false"><i class="c-edu" aria-hidden="true"></i>Освіта <span class="count">0</span></button>
+          <button type="button" class="chip" data-cat="games" aria-pressed="false"><i class="c-games" aria-hidden="true"></i>Ігри <span class="count">0</span></button>
+          <button type="button" class="chip" data-cat="tools" aria-pressed="false"><i class="c-tools" aria-hidden="true"></i>Інструменти <span class="count">0</span></button>
+          <button type="button" class="chip" data-cat="other" aria-pressed="false"><i class="c-other" aria-hidden="true"></i>Інше <span class="count">0</span></button>
+        </div>
 
-                            <!-- Title -->
-                            <h2 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1.5 group-hover:text-zinc-950 dark:group-hover:text-white transition-colors">
-                                ${project.title}
-                            </h2>
+        <div class="controls">
+          <label class="search">
+            <span class="sr-only">Пошук проєктів</span>
+            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.6 10.6 3.4 3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <input type="search" id="search" placeholder="Пошук проєктів…" autocomplete="off" spellcheck="false">
+          </label>
+          <label class="sort">
+            <span class="sr-only">Сортування</span>
+            <select id="sort">
+              <option value="recommended">Рекомендовані</option>
+              <option value="stars">За кількістю зірок</option>
+              <option value="updated">За датою оновлення</option>
+              <option value="name">За назвою</option>
+            </select>
+          </label>
+        </div>
+      </div>
 
-                            <!-- Description -->
-                            <p class="text-zinc-500 dark:text-zinc-400 text-xs leading-relaxed mb-4 font-normal line-clamp-2">
-                                ${project.description}
-                            </p>
-                        </div>
+      <div id="notice" class="notice" hidden></div>
+      <div class="grid" id="grid" aria-busy="true"></div>
+      <div id="empty" class="empty" hidden></div>
+    </section>
+  </main>
 
-                        <!-- Badge Footer -->
-                        <div class="relative z-10 pt-3 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between">
-                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-medium border ${project.badgeBg}">
-                                ${project.tagText}
-                            </span>
-                            <span class="text-[10px] text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300 transition-colors font-medium">
-                                Перейти <i class="fa-solid fa-chevron-right text-[8px] ml-0.5"></i>
-                            </span>
-                        </div>
-                    `;
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year">2026</span> whyuxavier. Дані — з публічного <a href="https://docs.github.com/en/rest/repos/repos" target="_blank" rel="noopener noreferrer">GitHub REST API</a>.</p>
+      <a href="https://github.com/whyuxavier" target="_blank" rel="noopener noreferrer">github.com/whyuxavier</a>
+    </div>
+  </footer>
 
-                    projectsGrid.appendChild(card);
-                });
-            }
+  <!-- ===== Вікно [i] ===== -->
+  <dialog id="infoDialog" class="dialog" aria-labelledby="infoTitle">
+    <div class="dialog-head">
+      <h2 id="infoTitle">Про портфоліо</h2>
+      <button type="button" class="icon-btn" id="infoClose" aria-label="Закрити">
+        <svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="dialog-body">
+      <p>Автоматичний каталог проєктів <b>whyuxavier</b>: освітніх квестів і тестів, ігор та вебінструментів. Сторінка сама отримує публічні репозиторії з GitHub, тому нові проєкти з’являються без редагування коду.</p>
+      <h3>Як це працює</h3>
+      <ul>
+        <li>Натисніть на картку — відкриється живе демо, якщо воно є, або репозиторій із кодом.</li>
+        <li>Кнопка «Код» на кожній картці завжди веде на GitHub.</li>
+        <li>Категорію визначено автоматично за назвою, описом і темами (topics) репозиторію; автор може задати її вручну.</li>
+        <li>Позначка «Демо» з’являється лише тоді, коли адресу демо вказано в налаштуваннях репозиторію або підтверджено GitHub Pages.</li>
+        <li>Зірки — справжні дані GitHub. Щоб поставити зірку, відкрийте репозиторій на GitHub.</li>
+        <li>Дані кешуються на 30 хвилин; кнопка «Оновити» завантажує свіжі.</li>
+      </ul>
+      <a class="btn btn-primary gh-star" id="repoLink" href="https://github.com/whyuxavier/portfolio" target="_blank" rel="noopener noreferrer">
+        <svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 .8l2.2 4.5 4.9.7-3.6 3.5.9 4.9L8 12.1l-4.4 2.3.9-4.9L.9 6l4.9-.7z"/></svg>
+        Код портфоліо на GitHub
+      </a>
+    </div>
+  </dialog>
 
-            updateCounts();
-        }
-
-        // Update counts in filter buttons
-        function updateCounts() {
-            document.getElementById('count-all').textContent = projects.length;
-            document.getElementById('count-edu').textContent = projects.filter(p => p.category === 'Education').length;
-            document.getElementById('count-tools').textContent = projects.filter(p => p.category === 'Tool').length;
-            document.getElementById('count-games').textContent = projects.filter(p => p.category === 'Game').length;
-            document.getElementById('count-tg').textContent = projects.filter(p => p.category === 'Telegram').length;
-        }
-
-        // Filter button click handler
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => {
-                    b.classList.remove('bg-zinc-900', 'dark:bg-zinc-100', 'text-white', 'dark:text-zinc-900', 'active', 'shadow-sm');
-                    b.classList.add('bg-zinc-100', 'dark:bg-zinc-800', 'text-zinc-600', 'dark:text-zinc-400');
-                });
-
-                btn.classList.remove('bg-zinc-100', 'dark:bg-zinc-800', 'text-zinc-600', 'dark:text-zinc-400');
-                btn.classList.add('bg-zinc-900', 'dark:bg-zinc-100', 'text-white', 'dark:text-zinc-900', 'active', 'shadow-sm');
-
-                currentFilter = btn.dataset.filter;
-                renderProjects();
-            });
-        });
-
-        // Search input handler
-        searchInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value.trim();
-            renderProjects();
-        });
-
-        // MODAL LOGIC
-        const infoBtn = document.getElementById('infoBtn');
-        const infoModal = document.getElementById('infoModal');
-        const modalContent = document.getElementById('modalContent');
-        const closeModal = document.getElementById('closeModal');
-
-        function openModal() {
-            infoModal.classList.remove('hidden');
-            setTimeout(() => {
-                infoModal.classList.remove('opacity-0');
-                modalContent.classList.remove('scale-95');
-                modalContent.classList.add('scale-100');
-            }, 10);
-        }
-
-        function hideModal() {
-            infoModal.classList.add('opacity-0');
-            modalContent.classList.remove('scale-100');
-            modalContent.classList.add('scale-95');
-            setTimeout(() => {
-                infoModal.classList.add('hidden');
-            }, 200);
-        }
-
-        infoBtn.addEventListener('click', openModal);
-        closeModal.addEventListener('click', hideModal);
-
-        // Close modal on backdrop click
-        infoModal.addEventListener('click', (e) => {
-            if (e.target === infoModal) {
-                hideModal();
-            }
-        });
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !infoModal.classList.contains('hidden')) {
-                hideModal();
-            }
-        });
-
-        // Set Current Year in Footer
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Initial Initialization & Render
-        initTheme();
-        renderProjects();
-    </script>
+  <script src="script.js" defer></script>
 </body>
 </html>
