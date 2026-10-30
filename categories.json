@@ -1,0 +1,43 @@
+{
+  "settings": {
+    "username": "whyuxavier",
+    "portfolioRepo": "portfolio",
+    "includeForks": false,
+    "includeArchived": false,
+    "excludeRepos": ["portfolio"],
+    "cacheMinutes": 30
+  },
+
+  "projects": {
+    "it-alias": {
+      "category": "education",
+      "featured": true
+    },
+    "data-analysis-quest": {
+      "category": "education",
+      "featured": true
+    },
+    "cyber-tournament": {
+      "category": "tools",
+      "featured": true
+    },
+    "pixelka": {
+      "category": "tools",
+      "featured": true
+    },
+    "bor_alert": {
+      "category": "other",
+      "featured": true
+    },
+    "ai-invaders": {
+      "category": "games"
+    }
+  },
+
+  "keywords": {
+    "education": [],
+    "games": [],
+    "tools": [],
+    "other": []
+  }
+}
