@@ -37,6 +37,9 @@
     },
     "minesweeper": {
       "category": "games"
+    },
+    "key-puzzle":{
+      "category": "games"
     }
   },
 
