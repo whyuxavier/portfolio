@@ -51,8 +51,8 @@
     ],
     games: [
       'game:3', 'games:3', 'gaming:3', 'roblox:3', 'arcade:3', 'platformer:3', 'shooter:3',
-      'invaders:2', 'puzzle:2', 'rpg:3', 'pixel:1',
-      'гра:3', 'ігри:3', 'гри:2', 'ігров*:2', 'платформер*:3', 'аркад*:3', 'пазл*:2', 'шутер*:3', 'головоломк*:2',
+      'invaders:2', 'puzzle:2', 'rpg:3', 'pixel:1', 'minesweeper:3', 'tetris:3', 'snake:2', 'clicker:3', 'runner:2',
+      'гра:3', 'гру:3', 'грі:3', 'ігри:3', 'гри:2', 'ігров*:2', 'сапер*:3', 'тетріс*:3', 'змійк*:2', 'клікер*:3', 'платформер*:3', 'аркад*:3', 'пазл*:2', 'шутер*:3', 'головоломк*:2',
     ],
     tools: [
       'tool:3', 'tools:3', 'utility:3', 'utils:2', 'editor:3', 'generator:3', 'converter:3', 'creator:2',
@@ -490,9 +490,6 @@
   }
 
   /* ---------------- Картки ---------------- */
-  function demoHost(url) {
-    try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
-  }
   function buildCard(p) {
     const primaryUrl = p.demo ? p.demo.url : p.repoUrl;
     const primaryLabel = p.demo
@@ -506,7 +503,6 @@
       p.language && h('span', { class: 'tag tag-lang' },
         h('i', { class: 'lang-dot', 'aria-hidden': 'true', style: LANG_COLORS[p.language] ? { background: LANG_COLORS[p.language] } : null }),
         p.language),
-      p.demo && h('span', { class: 'tag tag-demo' }, 'Демо'),
     );
 
     const starsText = `${p.stars} ${plural(p.stars, STAR_FORMS)}`;
@@ -520,9 +516,7 @@
         h('time', { datetime: p.updated.toISOString() }, fmtDate(p.updated))),
     );
 
-    const hint = p.demo
-      ? h('span', { class: 'primary-hint', title: p.demo.url }, p.demo.source === 'pages' ? 'GitHub Pages' : h('b', null, demoHost(p.demo.url)))
-      : h('span', { class: 'primary-hint' }, 'Лише вихідний код');
+    const hint = p.demo ? null : h('span', { class: 'primary-hint' }, 'Лише код');
 
     const actions = h('div', { class: 'card-actions' },
       hint,
