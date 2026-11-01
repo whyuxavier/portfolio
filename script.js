@@ -143,7 +143,7 @@
   function fmtWhen(ts) {
     const d = new Date(ts);
     const today = new Date();
-    return d.toDateString() === today.toDateString() ? `сьогодні о ${timeFmt.format(d)}` : dateTimeFmt.format(d);
+    return d.toDateString() === today.toDateString() ? `о ${timeFmt.format(d)}` : dateTimeFmt.format(d);
   }
 
   /* ---------------- URL-перевірки ---------------- */
@@ -618,18 +618,6 @@
     );
     els.empty.hidden = false;
   }
-  function renderStats() {
-    const total = state.projects.length;
-    const stars = state.projects.reduce((sum, p) => sum + p.stars, 0);
-    const demos = state.projects.filter((p) => p.demo).length;
-    $('[data-stat="total"]').textContent = String(total);
-    $('[data-stat="stars"]').textContent = String(stars);
-    $('[data-stat="demos"]').textContent = String(demos);
-    const cats = $('[data-stat="cats"]');
-    cats.replaceChildren(...Object.entries(CATEGORIES).map(([key, c]) =>
-      h('span', null, h('i', { class: c.dot, 'aria-hidden': 'true' }), c.label, ' ',
-        h('b', null, String(state.projects.filter((p) => p.category === key).length)))));
-  }
   function showSkeletons(n = 6) {
     els.grid.setAttribute('aria-busy', 'true');
     els.grid.replaceChildren(...Array.from({ length: n }, buildSkeleton));
@@ -651,12 +639,20 @@
     }
   }
   function setStatus() {
-    const parts = [];
-    if (state.loading) parts.push(state.data ? 'Оновлюємо дані з GitHub…' : 'Завантажуємо проєкти з GitHub…');
-    else if (state.data) parts.push(`Дані з GitHub: ${fmtWhen(state.data.ts)}`);
-    const btn = h('button', { type: 'button', class: 'link-btn', disabled: state.loading || undefined }, 'Оновити');
-    btn.addEventListener('click', () => refresh({ force: true }));
-    els.status.replaceChildren(h('span', null, parts.join(' ')), state.data || state.lastError ? btn : '');
+    const items = [];
+    if (state.data && state.projects.length) {
+      const stars = state.projects.reduce((sum, p) => sum + p.stars, 0);
+      items.push(h('span', { class: 'status-stars', title: 'Зірок на GitHub разом' },
+        icon('star'), String(stars), h('span', { class: 'sr-only' }, ` ${plural(stars, STAR_FORMS)} на GitHub разом`)));
+    }
+    if (state.loading) items.push(h('span', null, state.data ? 'Оновлюємо…' : 'Завантажуємо проєкти з GitHub…'));
+    else if (state.data) items.push(h('span', { title: 'Коли дані востаннє отримано з GitHub' }, `Оновлено ${fmtWhen(state.data.ts)}`));
+    if (state.data || state.lastError) {
+      const btn = h('button', { type: 'button', class: 'link-btn', disabled: state.loading || undefined }, 'Оновити');
+      btn.addEventListener('click', () => refresh({ force: true }));
+      items.push(btn);
+    }
+    els.status.replaceChildren(...items);
   }
   function retryButton(label = 'Спробувати ще раз') {
     const b = h('button', { type: 'button', class: 'btn btn-sm btn-ghost' }, label);
@@ -689,7 +685,6 @@
     state.data = data;
     state.projects = buildProjects(data);
     state.cards = new Map(state.projects.map((p) => [p.name, buildCard(p)]));
-    renderStats();
     render();
   }
   async function refresh({ force = false } = {}) {
