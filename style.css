@@ -368,7 +368,7 @@ button, input, select { font: inherit; color: inherit; }
 
 .card-actions {
   position: relative; z-index: 2; /* вище за розтягнуте посилання */
-  display: flex; align-items: center; gap: 8px; padding: 12px 18px; border-top: 1px solid var(--border); background: var(--bg-2);
+  display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 12px 18px; border-top: 1px solid var(--border); background: var(--bg-2);
 }
 .card-actions .primary-hint { flex: 1; min-width: 0; font-size: .8rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; pointer-events: none; }
 .card-actions .primary-hint b { color: var(--text-2); font-weight: 600; }
