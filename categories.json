@@ -34,6 +34,9 @@
     },
     "server-room": {
       "category": "games"
+    },
+    "minesweeper": {
+      "category": "games"
     }
   },
 
