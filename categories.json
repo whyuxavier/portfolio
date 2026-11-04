@@ -40,6 +40,9 @@
     },
     "key-puzzle":{
       "category": "games"
+    },
+    "takt-type":{
+      "category":"other"
     }
   },
 
