@@ -434,6 +434,7 @@ button, input, select { font: inherit; color: inherit; }
 .dialog-body p { margin: 0 0 14px; }
 .dialog-body h3 { margin: 0 0 8px; font-size: .95rem; color: var(--text); }
 .dialog-body ul { margin: 0 0 18px; padding-left: 20px; }
+.dialog-body .ai-note { margin: 14px 0 0; font-size: .8rem; color: var(--muted); }
 .dialog-body li { margin-bottom: 6px; }
 .dialog-body li::marker { color: var(--accent); }
 .gh-star svg { color: currentColor; }
