@@ -142,8 +142,9 @@ button, input, select { font: inherit; color: inherit; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
-.hero-pattern {
-  position: absolute; inset: 0; pointer-events: none;
+/* Сітка на фоні всього сайту: зафіксована у вікні, «світло» йде за курсором */
+.bg-grid {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background-image:
     linear-gradient(to right, color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px),
     linear-gradient(to bottom, color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px);

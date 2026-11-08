@@ -859,36 +859,32 @@
     card.classList.remove('is-loading');
   }
 
-  /* ---------------- Сітка в hero йде за курсором ----------------
-     Лише для миші/тачпада і без reduced-motion. Плавно «доганяє» курсор
-     і зупиняє анімацію, щойно дійшла (не крутиться постійно). */
+  /* ---------------- Сітка на фоні йде за курсором ----------------
+     Працює на всій сторінці. Лише для миші/тачпада і без reduced-motion.
+     Плавно «доганяє» курсор і зупиняє анімацію, щойно дійшла. */
   function initHeroPointer() {
-    const hero = $('.hero');
-    const pattern = $('.hero-pattern');
-    if (!hero || !pattern) return;
+    const pattern = $('.bg-grid');
+    if (!pattern) return;
     if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const PARALLAX = 10; // максимальний зсув сітки, px
     let tx = null, ty = null, cx = null, cy = null, raf = 0;
-    const rest = () => { const r = hero.getBoundingClientRect(); return [r.width * 0.62, r.height * 0.45]; };
+    const rest = () => [innerWidth * 0.62, innerHeight * 0.45];
     function step() {
-      const r = hero.getBoundingClientRect();
       const [dx, dy] = tx === null ? rest() : [tx, ty];
       if (cx === null) [cx, cy] = rest();
       cx += (dx - cx) * 0.14;
       cy += (dy - cy) * 0.14;
       pattern.style.setProperty('--mx', `${cx.toFixed(1)}px`);
       pattern.style.setProperty('--my', `${cy.toFixed(1)}px`);
-      pattern.style.setProperty('--px', `${(((cx / r.width) - 0.5) * PARALLAX).toFixed(2)}px`);
-      pattern.style.setProperty('--py', `${(((cy / r.height) - 0.5) * PARALLAX).toFixed(2)}px`);
+      pattern.style.setProperty('--px', `${(((cx / innerWidth) - 0.5) * PARALLAX).toFixed(2)}px`);
+      pattern.style.setProperty('--py', `${(((cy / innerHeight) - 0.5) * PARALLAX).toFixed(2)}px`);
       raf = Math.abs(dx - cx) + Math.abs(dy - cy) > 0.5 ? requestAnimationFrame(step) : 0;
     }
     const go = () => { if (!raf) raf = requestAnimationFrame(step); };
-    hero.addEventListener('pointermove', (e) => {
-      const r = hero.getBoundingClientRect();
-      tx = e.clientX - r.left; ty = e.clientY - r.top; go();
-    });
-    hero.addEventListener('pointerleave', () => { tx = ty = null; go(); });
+    window.addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; go(); }, { passive: true });
+    document.documentElement.addEventListener('pointerleave', () => { tx = ty = null; go(); });
+    window.addEventListener('blur', () => { tx = ty = null; go(); });
   }
 
   /* ---------------- Старт ---------------- */
