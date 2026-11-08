@@ -744,7 +744,7 @@
       const light = document.documentElement.getAttribute('data-theme') === 'light';
       themeBtn.setAttribute('aria-label', light ? 'Увімкнути темну тему' : 'Увімкнути світлу тему');
       const meta = $('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', light ? '#f6f6fb' : '#0d0f17');
+      if (meta) meta.setAttribute('content', light ? '#f4f5fa' : '#1b1d23');
     };
     themeBtn.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';

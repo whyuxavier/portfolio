@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="uk" data-theme="dark">
+<html lang="uk" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>whyuxavier — портфоліо проєктів</title>
   <meta name="description" content="Портфоліо whyuxavier: освітні проєкти, інтерактивні ігри та корисні інструменти. Каталог автоматично збирається з публічних репозиторіїв GitHub.">
   <meta name="author" content="whyuxavier">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0d0f17">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f5fa">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="uk_UA">
@@ -17,7 +17,7 @@
   <meta name="twitter:card" content="summary">
   <!-- Canonical / og:url не вказано навмисно: додайте їх, коли буде відома остаточна адреса сайту (див. README). -->
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1.5' y='1.5' width='29' height='29' rx='7' fill='%23141724' stroke='%233b3561' stroke-width='1.5'/%3E%3Cpath d='M12 9.5c-2 0-2.8 1-2.8 2.8v1.6c0 1.2-.6 1.9-1.8 2.1 1.2.2 1.8.9 1.8 2.1v1.6c0 1.8.8 2.8 2.8 2.8M20 9.5c2 0 2.8 1 2.8 2.8v1.6c0 1.2.6 1.9 1.8 2.1-1.2.2-1.8.9-1.8 2.1v1.6c0 1.8-.8 2.8-2.8 2.8' fill='none' stroke='%23a78bfa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16 12.6l1 2.1 2.3.3-1.7 1.6.4 2.3-2-1.1-2 1.1.4-2.3-1.7-1.6 2.3-.3z' fill='%237dd3fc'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236f8ad6'/%3E%3Cstop offset='1' stop-color='%238fd1bd'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M12 9.5c-2 0-2.8 1-2.8 2.8v1.6c0 1.2-.6 1.9-1.8 2.1 1.2.2 1.8.9 1.8 2.1v1.6c0 1.8.8 2.8 2.8 2.8M20 9.5c2 0 2.8 1 2.8 2.8v1.6c0 1.2.6 1.9 1.8 2.1-1.2.2-1.8.9-1.8 2.1v1.6c0 1.8-.8 2.8-2.8 2.8' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16 12.6l1 2.1 2.3.3-1.7 1.6.4 2.3-2-1.1-2 1.1.4-2.3-1.7-1.6 2.3-.3z' fill='%23f0c96a'/%3E%3C/svg%3E">
 
   <!-- Застосовуємо збережену тему ще до відмальовки, щоб не було «спалаху» -->
   <script>
@@ -26,6 +26,8 @@
       if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
     } catch (e) {}
   </script>
+  <link rel="preconnect" href="https://fonts.cdnfonts.com">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/fixel-display">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
