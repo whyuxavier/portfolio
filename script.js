@@ -79,6 +79,7 @@
   const ICONS = {
     star: '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 .8l2.2 4.5 4.9.7-3.6 3.5.9 4.9L8 12.1l-4.4 2.3.9-4.9L.9 6l4.9-.7z"/></svg>',
     code: '<svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/></svg>',
+    refresh: '<svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2.5v3h-3"/></svg>',
     external: '<svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M6 3h7v7M13 3 4 12"/></svg>',
   };
 
@@ -136,7 +137,7 @@
     return forms[r] || forms.many;
   }
   const STAR_FORMS = { one: 'зірка', few: 'зірки', many: 'зірок', other: 'зірки' };
-  const dateFmt = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
+  const dateFmt = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'short', year: 'numeric' });
   const timeFmt = new Intl.DateTimeFormat('uk-UA', { hour: '2-digit', minute: '2-digit' });
   const dateTimeFmt = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
   const fmtDate = (d) => dateFmt.format(d).replace(/\s*р\.$/, '');
@@ -511,12 +512,11 @@
         class: 'stars', ...externalLinkProps(p.repoUrl),
         title: 'Поставити зірку можна на сторінці репозиторію на GitHub',
         'aria-label': `${starsText} на GitHub. Відкрити репозиторій ${p.name}`,
-      }, icon('star'), starsText),
-      p.updated && h('span', null, 'Оновлено: ',
-        h('time', { datetime: p.updated.toISOString() }, fmtDate(p.updated))),
+      }, icon('star'), String(p.stars)),
+      p.updated && h('time', { datetime: p.updated.toISOString(), title: `Оновлено ${fmtDate(p.updated)}` }, fmtDate(p.updated)),
     );
 
-    const hint = p.demo ? null : h('span', { class: 'primary-hint' }, 'Лише код');
+    const hint = null;
 
     const actions = h('div', { class: 'card-actions' },
       hint,
@@ -530,7 +530,6 @@
       h('div', { class: 'card-top' },
         h('h3', { class: 'card-title' },
           h('a', { ...externalLinkProps(primaryUrl), 'aria-label': primaryLabel }, p.title)),
-        p.featured && h('span', { class: 'featured-mark', title: 'Вибраний проєкт' }, 'Вибране'),
       ),
       p.description
         ? h('p', { class: 'card-desc', title: p.description }, p.description)
@@ -645,10 +644,12 @@
       items.push(h('span', { class: 'status-stars', title: 'Зірок на GitHub разом' },
         icon('star'), String(stars), h('span', { class: 'sr-only' }, ` ${plural(stars, STAR_FORMS)} на GitHub разом`)));
     }
-    if (state.loading) items.push(h('span', null, state.data ? 'Оновлюємо…' : 'Завантажуємо проєкти з GitHub…'));
-    else if (state.data) items.push(h('span', { title: 'Коли дані востаннє отримано з GitHub' }, `Оновлено ${fmtWhen(state.data.ts)}`));
     if (state.data || state.lastError) {
-      const btn = h('button', { type: 'button', class: 'link-btn', disabled: state.loading || undefined }, 'Оновити');
+      const when = state.data ? ` (дані ${fmtWhen(state.data.ts)})` : '';
+      const btn = h('button', {
+        type: 'button', class: `refresh-btn${state.loading ? ' is-loading' : ''}`, disabled: state.loading || undefined,
+        title: `Оновити дані з GitHub${when}`, 'aria-label': `Оновити дані з GitHub${when}`,
+      }, icon('refresh'));
       btn.addEventListener('click', () => refresh({ force: true }));
       items.push(btn);
     }
@@ -775,7 +776,7 @@
     const g = $('#heroContrib');
     if (!g) return;
     const NS = 'http://www.w3.org/2000/svg';
-    const cols = 30, rows = 6, size = 11, step = 14.4, x0 = 24, y0 = 252;
+    const cols = 30, rows = 5, size = 11, step = 14.4, x0 = 24, y0 = 228;
     let seed = 17;
     const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
     for (let c = 0; c < cols; c++) {
