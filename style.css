@@ -148,10 +148,11 @@ button, input, select { font: inherit; color: inherit; }
     linear-gradient(to right, color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px),
     linear-gradient(to bottom, color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px);
   background-size: 32px 32px;
-  background-position: -1px -1px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 75% at 62% 45%, #000 20%, transparent 78%);
-          mask-image: radial-gradient(ellipse 70% 75% at 62% 45%, #000 20%, transparent 78%);
-  opacity: .55;
+  /* --mx/--my: позиція курсора (script.js); сітка трохи зсувається, а «світло» йде за курсором */
+  background-position: calc(-1px + var(--px, 0px)) calc(-1px + var(--py, 0px));
+  -webkit-mask-image: radial-gradient(ellipse 70% 75% at var(--mx, 62%) var(--my, 45%), #000 20%, transparent 78%);
+          mask-image: radial-gradient(ellipse 70% 75% at var(--mx, 62%) var(--my, 45%), #000 20%, transparent 78%);
+  opacity: .75;
 }
 .hero-inner {
   position: relative;
@@ -428,7 +429,7 @@ button, input, select { font: inherit; color: inherit; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 24px; padding-top: 32px; padding-bottom: 60px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 24px; padding-top: 32px; padding-bottom: 36px; }
   .hero-text { max-width: none; }
   .hero-art { max-width: 420px; margin: 0 auto; justify-self: center; }
 }
@@ -438,13 +439,14 @@ button, input, select { font: inherit; color: inherit; }
   .controls { flex: none; justify-content: stretch; }
   .search { max-width: none; }
   .hide-sm { display: none; }
+  .scroll-cue { display: none; } /* на телефоні зайва: кнопка «Дивитися проєкти» вже є */
 }
 @media (max-width: 520px) {
   .container { padding-inline: 16px; }
   .controls { flex-wrap: wrap; }
   .search { flex: 1 1 100%; }
   .sort { flex: 1 1 0; }
-  .hero-inner { padding-top: 24px; padding-bottom: 60px; }
+  .hero-inner { padding-top: 24px; padding-bottom: 28px; }
   .hero-actions .btn { flex: 1 1 auto; }
   .hero-art { max-width: 340px; }
   .tip-card { max-width: none; width: auto; margin-left: 0; }
