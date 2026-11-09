@@ -10,7 +10,7 @@
 
   "projects": {
     "it-alias": {
-      "category": "education",
+      "category": "games",
       "featured": true
     },
     "data-analysis-quest": {
@@ -39,6 +39,12 @@
       "category": "games"
     },
     "key-puzzle":{
+      "category": "games"
+    },
+    "bug-storm": {
+      "category": "games"
+    },
+    "ghost-in-html": {
       "category": "games"
     },
     "takt-type":{
