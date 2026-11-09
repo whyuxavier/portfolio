@@ -9,6 +9,14 @@
   },
 
   "projects": {
+    "learn-python": {
+      "category": "education",
+      "featured": true
+    },
+    "learn-web": {
+      "category": "education",
+      "featured": true
+    },
     "it-alias": {
       "category": "games",
       "featured": true
