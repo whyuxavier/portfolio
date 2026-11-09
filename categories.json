@@ -23,11 +23,11 @@
     },
     "data-analysis-quest": {
       "category": "education",
-      "featured": true
+      "featured": false
     },
     "cyber-tournament": {
       "category": "tools",
-      "featured": true
+      "featured": false
     },
     "pixelka": {
       "category": "tools",
@@ -35,7 +35,7 @@
     },
     "bor_alert": {
       "category": "other",
-      "featured": true
+      "featured": false
     },
     "ai-invaders": {
       "category": "games"
