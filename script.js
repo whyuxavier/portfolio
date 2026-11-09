@@ -10,10 +10,10 @@
   /* ---------------- Налаштування за замовчуванням ---------------- */
   const DEFAULT_SETTINGS = {
     username: 'whyuxavier',
-    portfolioRepo: 'portfolio',
+    portfolioRepo: 'whyuxavier.github.io',
     includeForks: false,
     includeArchived: false,
-    excludeRepos: ['portfolio'],
+    excludeRepos: ['whyuxavier.github.io', 'portfolio'],
     cacheMinutes: 30,
   };
   const CONFIG_URL = 'categories.json';

@@ -23,7 +23,7 @@
 2. Якщо в `localStorage` є свіжий кеш (до 30 хв) — показує його без запитів до API.
    Застарілий кеш показується одразу, а дані оновлюються у фоні.
 3. Інакше завантажує `GET /users/whyuxavier/repos` посторінково (по 100), доки є `rel="next"`.
-4. Форки, архівні репозиторії та сам `portfolio` за замовчуванням не показуються.
+4. Форки, архівні репозиторії та сам `whyuxavier.github.io` (репозиторій портфоліо) за замовчуванням не показуються.
 5. Для кожного репозиторію визначає адресу демо (див. нижче) і категорію.
 6. Фільтри, пошук і сортування працюють локально — без нових запитів.
 
@@ -53,10 +53,10 @@
 {
   "settings": {
     "username": "whyuxavier",
-    "portfolioRepo": "portfolio",
+    "portfolioRepo": "whyuxavier.github.io",
     "includeForks": false,
     "includeArchived": false,
-    "excludeRepos": ["portfolio"],
+    "excludeRepos": ["whyuxavier.github.io", "portfolio"],
     "cacheMinutes": 30
   },
   "projects": {
@@ -121,20 +121,20 @@ GitHub Pages перебудує сайт за 1–2 хвилини. Щоб по�
 `fetch` не працює для `file://`, тому відкривайте через локальний сервер:
 
 ```bash
-cd portfolio
+cd whyuxavier.github.io
 python -m http.server 8000
 # відкрийте http://localhost:8000
 ```
 
 ## Публікація на GitHub Pages
 
-1. **Репозиторій.** У вас уже є `whyuxavier/portfolio` — можна замінити в ньому файли.
-   Або створіть новий: <https://github.com/new> → назва, наприклад `portfolio`, тип **Public**.
+1. **Репозиторій.** Портфоліо лежить у `whyuxavier/whyuxavier.github.io` — це особливий репозиторій GitHub Pages,
+   тому сайт відкривається просто за адресою `https://whyuxavier.github.io/`.
 2. **Файли.** У репозиторії: *Add file → Upload files* → перетягніть `index.html`, `style.css`,
    `script.js`, `categories.json`, `tips.json`, `README.md` → *Commit changes*. Файли мають лежати в корені.
 3. **Pages.** *Settings → Pages*.
 4. **Джерело.** *Build and deployment → Source: Deploy from a branch*, гілка `main`, папка `/ (root)` → *Save*.
-5. **Відкрити.** Через 1–2 хвилини сайт буде на `https://whyuxavier.github.io/portfolio/`
+5. **Відкрити.** Через 1–2 хвилини сайт буде на `https://whyuxavier.github.io/`
    (адреса з’явиться вгорі сторінки Settings → Pages). Додайте її в поле **Website** репозиторію.
 6. **Оновлення категорій** — див. розділ про `categories.json`.
 
@@ -143,8 +143,8 @@ python -m http.server 8000
 Коли адреса сайту остаточна, можна додати в `<head>` файлу `index.html`:
 
 ```html
-<link rel="canonical" href="https://whyuxavier.github.io/portfolio/">
-<meta property="og:url" content="https://whyuxavier.github.io/portfolio/">
+<link rel="canonical" href="https://whyuxavier.github.io/">
+<meta property="og:url" content="https://whyuxavier.github.io/">
 ```
 
 ## Проблеми
