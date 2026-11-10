@@ -17,6 +17,14 @@
       "category": "education",
       "featured": true
     },
+    "it-maysternia": {
+      "category": "education",
+      "featured": true
+    },
+    "it-compass": {
+      "category": "education",
+      "featured": true
+    },
     "it-alias": {
       "category": "games",
       "featured": true
@@ -47,7 +55,7 @@
       "category": "games"
     },
     "key-puzzle":{
-      "category": "games"
+      "category": "education"
     },
     "bug-storm": {
       "category": "games"
